@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
@@ -10,14 +11,15 @@ import { AppRouter } from '../../routes/router'
 import { Auth } from '../../services/auth'
 
 const loginSchema = z.object({
-  email: z.string().email({ message: 'E-mail inválido' }),
-  password: z.string().min(6, { message: 'Mínimo 6 caracteres' })
+  email: z.string().min(1, { message: 'Informe o e-mail' }),
+  password: z.string().min(1, { message: 'Informe a senha' })
 })
 
 type LoginSchema = z.infer<typeof loginSchema>
 
 export const useLogin = () => {
   const router = useRouter<AppRouter>()
+  const [showPassword, setShowPassword] = useState(false)
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema)
@@ -38,9 +40,13 @@ export const useLogin = () => {
     loginMutation.mutate(data)
   })
 
+  const toggleShowPassword = () => setShowPassword((prev) => !prev)
+
   return {
     form,
     handleSubmit,
-    isLoading: loginMutation.isPending
+    loginMutation,
+    showPassword,
+    toggleShowPassword
   }
 }

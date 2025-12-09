@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #2D68FF;
+  --color-primary-dark: #1a4fd6;
+  --color-primary-light: #4d8aff;
+
+  --color-text: #1f2937;
+  --color-text-light: #6b7280;
+  --color-text-muted: #9ca3af;
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
